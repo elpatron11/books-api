@@ -49,14 +49,13 @@ books.get('/', (req, res) => {
         .then(foundBooks => {
             res.json(foundBooks)
         })
+         .catch(err => {
+            console.log('err', err)
+           
+        })
 })
 
-// books.get('/books', (req, res) => {
-//     Book.find()
-//         .then(foundBooks => {
-//             res.json(foundBooks)
-//         })
-// })
+
 
 // Show:
 books.get('/:id', (req, res) => {
@@ -64,6 +63,54 @@ books.get('/:id', (req, res) => {
         .then(foundBook => {
             res.json(foundBook)
         })
+         .catch(err => {
+             res.status(400).json({
+                message: 'An error has occurred'
+            })
+           
+        })
+
 })
+
+// UPDATE 
+books.put('/:id', (req, res) => {
+    Book.findByIdAndUpdate(req.params.id, req.body)
+        .then(updateBook => {
+            res.json(updateBook)
+        })
+        .catch(err => {
+            console.log('err', err)
+            
+        })
+})
+
+// DELETE 
+books.delete('/:id', (req, res) => {
+    Book.findByIdAndDelete(req.params.id)
+        .then(deletedBook => {
+            res.status(200).json({
+                message: 'Delete successful'
+            })
+        })  
+        .catch(err => {
+             res.status(400).json({
+                message: 'An error has occurred'
+            })
+        })
+})
+// CREATE 
+books.post('/', (req, res) => {
+    Book.create(req.body)
+        .then((createdBook) => {
+            res.status(200).json(createdBook)
+            console.log("Post")
+        })
+          .catch(err => {
+           res.status(400).json({
+                message: 'An error has occurred'
+            })
+        })
+})
+
 
 module.exports = books

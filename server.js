@@ -16,6 +16,10 @@ app.use(express.urlencoded({extended: true}))
 // ROUTES
 app.get('/', (req, res) => {
   res.send('Welcome to the Hello World! API')
+  .catch(err => {
+            console.log('err', err)
+           
+        })
 })
 
 // Languages: 
@@ -26,3 +30,4 @@ app.use('/books', booksController)
 app.listen(PORT, () => {
   console.log('Greetings! From port: ', PORT);
 })
+
